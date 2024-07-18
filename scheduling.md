@@ -21,3 +21,6 @@ add a new node
 or
 
 Edit the pod spec to add the NoSchedule toleration
+
+In the case of deploying ArgoCD plugin, the best practice is to deploy ArgoCD pods in worker node,
+ensures the control-plane components are isolated and have dedicated resources.
