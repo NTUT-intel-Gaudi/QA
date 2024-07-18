@@ -1,7 +1,9 @@
 # Mostly used commands in k8s cluster
 
-## get all pods
+## get nodes/pods/services
 
-kubectl get pods --all-namespaces
+kubectl get [nodes/pods/services] [-A/-n <namespace>]
 
-## get pod description
+## get description
+
+kubectl describe [nodes/pods/services] [-A/-n <namespace>]
