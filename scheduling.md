@@ -40,27 +40,59 @@ In a cluster, there might be:
 7. Storage(SSD) nodes
 
 And for a default cluster, it might not able to decide the best place to run the pods, so we can give k8s some extra instructions to help it.
-To do that, we label node with ssd
 
-## Node
-
+## Node selector
 
 
+## Node affinity
 
+In node config, taints are used to specified the key/value pairs
+  [ref]<https://kubernetes.io/docs/reference/config-api/kubeadm-config.v1beta3/#kubeadm-k8s-io-v1beta3-NodeRegistrationOptions>
 
+And In deployment/stateful set/job/other objects:
+  spec.nodeSelector.{[key,value]}
+  For node affinity, there are:
+  **affinity.nodeAffinity.requiredDuringSchedulingIgnoreDuringExecution**
 
+  1. wont reschedule execution pods
+  2. wont schedule pods if not preferences not matched (pending)
 
+  **affinity.nodeAffinity.preferredDuringSchedulingIgnoreDuringExecution**
 
+  1. wont reschedule execution pods
+  2. still schedule pods if not preferences not matched
 
-## workload scheduling in control node
+## pod affinity
 
-when scheduling non control plane pods on control node, you may get warning:
+Deploy pods at node as possible to reduce latency if different pods need to communicate with each other
+In deployment/stateful set/job/other objects:
+  **affinity.podAffinity.requiredDuringSchedulingIgnoreDuringExecution**
+  **affinity.podAffinity.preferredDuringSchedulingIgnoreDuringExecution**
+**warning: namespace**
+
+## pod anti-affinity
+
+Deploy pods at different node as possible to reduce impact of nodes going down, frequently used in deploying Nginx and other ingress controllers
+In deployment/stateful set/job/other objects:
+  **affinity.podAntiAffinity.requiredDuringSchedulingIgnoreDuringExecution**
+  **affinity.podAntiAffinity.preferredDuringSchedulingIgnoreDuringExecution**
+**warning: all nodes should have the same key: topologyKey: "kubernetes.io/hostname"**
+
+## taints & toleration
+
+For example, when scheduling non control plane pods on control node, you may get warning:
 
 `Warning  FailedScheduling  4m30s (x4 over 19m)  default-scheduler  0/1 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/control-plane: }. preemption: 0/1 nodes are available: 1 Preemption is not helpful for scheduling.`
 
 indicates that the scheduler is unable to schedule pods because the only available node has a taint that prevents the pods from being scheduled on it.
-The taint is **node-role**.
-kubernetes.io/control-plane:NoSchedule is applied to control plane nodes by default to prevent non-control plane workloads from being scheduled on them.
+The taint is:
+
+```yaml
+taints:
+  - key: "node-role.kubernetes.io/control-plane"
+    value: null
+    effect: NoSchedule
+```
 
 To resolve this, you can remove the taint
 
