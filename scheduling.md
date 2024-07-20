@@ -95,6 +95,7 @@ indicates that the scheduler is unable to schedule pods because the only availab
 The taint is:
 
 ```yaml
+# Taints: key=value:effect
 taints:
   - key: "node-role.kubernetes.io/control-plane"
     value: null
