@@ -43,6 +43,13 @@ And for a default cluster, it might not able to decide the best place to run the
 
 ## Node selector
 
+for example:
+In node config file:
+  kubeletExtraArgs.node-labels = "key0=value0,environment=production,region=us-west"
+
+And In deployment/stateful set/job/other objects:
+  spec.nodeSelector:
+    environment: production
 
 ## Node affinity
 
