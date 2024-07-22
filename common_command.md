@@ -1,5 +1,12 @@
 # Mostly used commands in k8s cluster
 
+## Reconfiguring a kubeadm cluster
+
+```bash
+# edit ClusterConfiguration (vim)
+kubectl edit cm -n kube-system kubeadm-config
+```
+
 ## get nodes/pods/services
 
 ```bash
@@ -17,6 +24,7 @@ kubectl get [node/pod/service/deployment/namespace] <name> -n <namespace>
 
 ```bash
 # all
+kubectl describe pods -A > tmp
 kubectl describe [nodes/pods/services] [-A/-n <namespace>]
 # single
 kubectl describe [node/pod/service] <name> -n <namespace>
