@@ -39,4 +39,8 @@ kubectl delete [nodes/pods/services] --all -n <namespace>
 kubectl delete pod [node/pod/service] <name> -n <namespace>
 ```
 
+## print join command
+
+kubeadm token create --print-join-command
+
 [cheat sheet](https://intellipaat.com/blog/tutorial/devops-tutorial/kubernetes-cheat-sheet/)
