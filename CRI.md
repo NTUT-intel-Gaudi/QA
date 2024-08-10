@@ -1,4 +1,10 @@
-# [ERROR CRI]: container runtime is not running
+# Container runtime interface (CRI)
+
+## Configure containerd cri
+
+containerd vs containerd.io
+
+## [ERROR CRI]: container runtime is not running
 
 output: time="2024-07-11T18:07:23+08:00" level=fatal msg="validate service connection: validate CRI v1 runtime API for endpoint \"unix:///var/run/dockershim.sock\": rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial unix /var/run/dockershim.sock: connect: no such file or directory\"
 
